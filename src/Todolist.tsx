@@ -4,16 +4,17 @@ import { useState } from 'react';
 
 export type TaskType = {
     title: string;
-    id: number;
+    id: string;
     isDone: boolean;
 }
 
 type PropsType = {
     title: string;
     tasks: Array<TaskType>;
-    removeTasks: (id: number) => void;
+    removeTasks: (id: string) => void;
     taskFilter: (filterValue: string)=>void;
-    prokladka: Array<TaskType>
+    prokladka: Array<TaskType>;
+    addTask: ()=>void;
 }
 
 export function Todolist(props: PropsType) {
@@ -24,7 +25,7 @@ export function Todolist(props: PropsType) {
                 <h3>{props.title}</h3>
                 <div>
                     <input />
-                    <button>+</button>
+                    <button onClick={()=>props.addTask()}>+</button>
                 </div>
                 <ul>
                     {props.prokladka.map((el: TaskType) => {

@@ -1,5 +1,6 @@
 import { title } from 'process';
 import React, { useState } from 'react';
+import { v1 } from 'uuid';
 import './App.css';
 import { Header } from './components/Header';
 import { Todolist } from './Todolist';
@@ -11,17 +12,23 @@ function App() {
 
 
     const [tasks, setTasks] = useState([
-        { id: 1, title: "CSS", isDone: true },
-        { id: 2, title: "JS", isDone: true },
-        { id: 3, title: "React", isDone: false },
-        { id: 4, title: "Rest Api", isDone: false },
-        { id: 5, title: "GraphQL", isDone: false },
+        { id: v1(), title: "CSS", isDone: true },
+        { id: v1(), title: "JS", isDone: true },
+        { id: v1(), title: "React", isDone: false },
+        { id: v1(), title: "Rest Api", isDone: false },
+        { id: v1(), title: "GraphQL", isDone: false },
     ])
 
-    const removeTasks = (id: number) => {
+    const removeTasks = (id: string) => {
         let filtered = tasks.filter(el => el.id != id)
         setTasks(filtered)
     }
+
+    const addTask = () => {
+        let newTitle = { id: v1(), title: "GraphQL", isDone: false }
+        setTasks([newTitle,...tasks ]);
+    }
+
 
     const [filterButton, setFilterButton] = useState('All')
     const taskFilter = (filterValue: string) => {
@@ -45,6 +52,7 @@ function App() {
                 removeTasks={removeTasks}
                 taskFilter={taskFilter}
                 prokladka={prokladka} 
+                addTask={addTask}
                 />
         </div>
     )
