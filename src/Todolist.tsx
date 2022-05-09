@@ -1,6 +1,7 @@
 import { type } from 'os';
 import React from 'react';
 import { useState } from 'react';
+import { v1 } from 'uuid';
 
 export type TaskType = {
     title: string;
@@ -14,18 +15,28 @@ type PropsType = {
     removeTasks: (id: string) => void;
     taskFilter: (filterValue: string)=>void;
     prokladka: Array<TaskType>;
-    addTask: ()=>void;
+    addTask: (newTask:string)=>void;
+
+
 }
 
 export function Todolist(props: PropsType) {
+  
+    const [newTask, setNewTask] = useState('')
+
+const onClickHandler = () => {
+    props.addTask(newTask)
+    setNewTask('')
+}
+
 
     return (
         <div className="App">
             <div>
                 <h3>{props.title}</h3>
                 <div>
-                    <input />
-                    <button onClick={()=>props.addTask()}>+</button>
+                    <input value={newTask} onChange={(event)=>setNewTask(event.currentTarget.value)}/>
+                    <button onClick={onClickHandler}>+</button>
                 </div>
                 <ul>
                     {props.prokladka.map((el: TaskType) => {

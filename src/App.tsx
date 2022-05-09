@@ -24,10 +24,11 @@ function App() {
         setTasks(filtered)
     }
 
-    const addTask = () => {
-        let newTitle = { id: v1(), title: "GraphQL", isDone: false }
-        setTasks([newTitle,...tasks ]);
+    const addTask = (newTask:string ) => {
+        let newTitle = { id: v1(), title: newTask, isDone: false }
+        setTasks([newTitle,...tasks]);
     }
+
 
 
     const [filterButton, setFilterButton] = useState('All')
