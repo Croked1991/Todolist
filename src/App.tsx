@@ -41,7 +41,7 @@ function App() {
         prokladka = tasks.filter(el => el.isDone === false)
     }
     if (filterButton === 'Complited') {
-        prokladka = tasks.filter(el => el.isDone === true)
+        prokladka = tasks.filter(el => el.isDone === true)    
     }
 
 
