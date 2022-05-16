@@ -5,6 +5,9 @@ type PropsType = {
     on: boolean
 }
 
+type AccordeonType = {
+    toogleSet: () => void
+}
 
 
 
@@ -39,11 +42,13 @@ export function OnOff(props: PropsType) {
         backgroundColor: on ? "green" : "red"
     }
 
-    const AccordeonTitle = () => {
+    const AccordeonTitle = (props: AccordeonType) => {
         return (
-            <h3>Title</h3>
+            <h3 onClick={props.toogleSet}>Title</h3>
         )
     }
+
+
 
     const AccordeonBody = () => {
         return (
@@ -58,10 +63,13 @@ export function OnOff(props: PropsType) {
 
     const Accordeon = () => {
         const [toggle, setToggle] = useState(true)
+
+        const toogleSet = () => {
+            setToggle(!toggle)
+        }
         return (
             <div>
-                <AccordeonTitle />
-                <button onClick={()=>{setToggle(toggle => !toggle)}}>toggle</button>
+                <AccordeonTitle toogleSet={toogleSet}/>
                 {toggle === true && <AccordeonBody />}
             </div>
         )
