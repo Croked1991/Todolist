@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { v1 } from 'uuid';
 import './App.css';
 import { Header } from './components/Header';
+import { OnOff } from './components/OnOff';
 import { Todolist } from './Todolist';
 import { TaskType } from './Todolist';
 
@@ -48,6 +49,7 @@ function App() {
 
     return (
         <div className="App">
+            <OnOff on={true}/>
             <Todolist title="What do lern"
                 tasks={tasks}
                 removeTasks={removeTasks}
