@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState, KeyboardEvent, ChangeEvent} from 'react';
+import { useState, KeyboardEvent, ChangeEvent } from 'react';
 
 export type TaskType = {
     title: string;
@@ -22,8 +22,9 @@ export function Todolist(props: PropsType) {
     const [newTask, setNewTask] = useState('')
 
     const onClickHandler = () => {
-        props.addTask(newTask)
-        setNewTask('')
+        if(newTask.trim() !== ''){
+        props.addTask(newTask.trim())
+        setNewTask('')}
     }
 
     const onKeyPressHadler = (event: KeyboardEvent<HTMLInputElement>) => {
@@ -41,15 +42,11 @@ export function Todolist(props: PropsType) {
     }
 
     const filterHandler = (filterValue: string) => {
-        console.log('hellk');
-        
         props.taskFilter(filterValue)
     }
 
 
-    const checkboxHandler = (elId: string, currentEvent: boolean) => {
-        props.changeCheckboxStatus(elId, currentEvent)
-    }
+
 
     return (
         <div className="App">
@@ -64,9 +61,12 @@ export function Todolist(props: PropsType) {
                 </div>
                 <ul>
                     {props.prokladka.map((el: TaskType) => {
+                        const checkboxHandler = (event: ChangeEvent<HTMLInputElement>) => {
+                            props.changeCheckboxStatus(el.id, event.currentTarget.checked)
+                        }
                         return (
                             <li key={el.id}>
-                                <input type="checkbox" checked={el.isDone} onChange={(event) => checkboxHandler(el.id, event.currentTarget.checked)}></input>
+                                <input type="checkbox" checked={el.isDone} onChange={checkboxHandler}></input>
                                 <span>{el.title}</span>
                                 <button onClick={() => removeTaskHandler(el.id)}>X</button>
                             </li>
