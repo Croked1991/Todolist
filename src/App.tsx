@@ -1,12 +1,7 @@
-import { title } from 'process';
 import React, { useState } from 'react';
 import { v1 } from 'uuid';
 import './App.css';
-import { Header } from './components/Header';
-import { OnOff } from './components/OnOff';
 import { Todolist } from './Todolist';
-import { TaskType } from './Todolist';
-
 
 
 function App() {
@@ -20,43 +15,48 @@ function App() {
         { id: v1(), title: "GraphQL", isDone: false },
     ])
 
+    const [filterButton, setFilterButton] = useState('All')
+   
+
     const removeTasks = (id: string) => {
-        let filtered = tasks.filter(el => el.id != id)
+        let filtered = tasks.filter(el => el.id !== id)
         setTasks(filtered)
     }
 
-    const addTask = (newTask:string ) => {
+    const addTask = (newTask: string) => {
         let newTitle = { id: v1(), title: newTask, isDone: false }
-        setTasks([newTitle,...tasks]);
+        setTasks([newTitle, ...tasks]);
     }
 
-
-
-    const [filterButton, setFilterButton] = useState('All')
+    
     const taskFilter = (filterValue: string) => {
         setFilterButton(filterValue)
     }
 
+    const changeCheckboxStatus = (currentId: string, currentEvent: boolean) => {
+        setTasks(tasks.map((el) => el.id === currentId ? { ...el, isDone: currentEvent } : el))
+    }
+
+    
     let prokladka = tasks
     if (filterButton === 'Active') {
         prokladka = tasks.filter(el => el.isDone === false)
     }
-    if (filterButton === 'Complited') {
-        prokladka = tasks.filter(el => el.isDone === true)    
+    if (filterButton === 'Completed') {
+        prokladka = tasks.filter(el => el.isDone === true)
     }
-
-
 
     return (
         <div className="App">
-            <OnOff on={true}/>
+
             <Todolist title="What do lern"
                 tasks={tasks}
                 removeTasks={removeTasks}
                 taskFilter={taskFilter}
-                prokladka={prokladka} 
+                prokladka={prokladka}
                 addTask={addTask}
-                />
+                changeCheckboxStatus={changeCheckboxStatus}
+            />
         </div>
     )
 }
