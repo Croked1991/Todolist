@@ -3,6 +3,8 @@ import { v1 } from 'uuid';
 import './App.css';
 import { Todolist } from './Todolist';
 
+export type FilterValuesType = 'All' | 'Active' | 'Completed'
+
 
 function App() {
 
@@ -15,7 +17,7 @@ function App() {
         { id: v1(), title: "GraphQL", isDone: false },
     ])
 
-    const [filterButton, setFilterButton] = useState('All')
+    const [filterButton, setFilterButton] = useState<FilterValuesType>('All')
    
 
     const removeTasks = (id: string) => {
@@ -29,7 +31,7 @@ function App() {
     }
 
     
-    const taskFilter = (filterValue: string) => {
+    const taskFilter = (filterValue: FilterValuesType) => {
         setFilterButton(filterValue)
     }
 
@@ -56,6 +58,7 @@ function App() {
                 prokladka={prokladka}
                 addTask={addTask}
                 changeCheckboxStatus={changeCheckboxStatus}
+                filterButton={filterButton}
             />
         </div>
     )
