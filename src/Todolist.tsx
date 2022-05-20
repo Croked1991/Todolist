@@ -1,6 +1,8 @@
+import { type } from 'os';
 import React from 'react';
 import { useState, KeyboardEvent, ChangeEvent } from 'react';
 import { FilterValuesType } from './App';
+import { UniButton } from './components/Button';
 import { Checkbox } from './components/Checkbox';
 import style from './Todolist.module.css'
 
@@ -10,7 +12,10 @@ export type TaskType = {
     isDone: boolean;
 }
 
-
+export type ButtonType = {
+    id: string
+    title: string
+}
 
 type PropsType = {
     title: string;
@@ -21,6 +26,7 @@ type PropsType = {
     addTask: (newTask: string) => void;
     changeCheckboxStatus: (currentId: string, eventStatus: boolean) => void
     filterButton: FilterValuesType 
+    buttons: ButtonType[]
 }
 
 export function Todolist(props: PropsType) {
@@ -78,9 +84,6 @@ export function Todolist(props: PropsType) {
                 </div>
                 <ul >
                     {props.prokladka.map((el: TaskType) => {
-                        // const checkboxHandler = (currentEvent: boolean) => {
-                        //     props.changeCheckboxStatus(el.id, currentEvent)
-                        // }
                         return (
                             <li key={el.id} className={el.isDone === true ? style.isDone: ""}>
                                 <Checkbox check={el.isDone} callBack={(currentEvent)=>checkboxHandler(el.id, currentEvent)}/>
@@ -91,9 +94,7 @@ export function Todolist(props: PropsType) {
                     })}
                 </ul>
                 <div>
-                    <button className={props.filterButton === "All" ? style.activeFilter : ''} onClick={() => filterHandler('All')}>All</button>
-                    <button className={props.filterButton === "Active" ? style.activeFilter : ''} onClick={() => filterHandler('Active')}>Active</button>
-                    <button className={props.filterButton === "Completed" ? style.activeFilter : ''} onClick={() => filterHandler('Completed')}>Completed</button>
+                    <UniButton filterButton={props.filterButton} filterHandler={filterHandler} buttons={props.buttons}/>
                 </div>
             </div>
         </div>
