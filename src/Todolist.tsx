@@ -6,6 +6,10 @@ import { UniButton } from './components/Button';
 import { Checkbox } from './components/Checkbox';
 import style from './Todolist.module.css'
 
+export type TodolistIDType = {
+    [key:string]:TaskType[]
+}
+
 export type TaskType = {
     title: string;
     id: string;
@@ -19,14 +23,16 @@ export type ButtonType = {
 
 type PropsType = {
     title: string;
-    tasks: Array<TaskType>;
-    removeTasks: (id: string) => void;
-    taskFilter: (filterValue: FilterValuesType) => void;
+    tasks: TodolistIDType;
+    removeTasks: (todolistID:string, id: string) => void;
+    taskFilter: (todolistID:string,filterValue: FilterValuesType) => void;
     prokladka: Array<TaskType>;
-    addTask: (newTask: string) => void;
-    changeCheckboxStatus: (currentId: string, eventStatus: boolean) => void
+    addTask: (todolistID:string, newTask: string) => void;
+    changeCheckboxStatus: (todolistID:string, currentId: string, eventStatus: boolean) => void
     filterButton: FilterValuesType 
     buttons: ButtonType[]
+    todolistID : string
+    removeTodolist: (todolistID:string)=>void
 }
 
 export function Todolist(props: PropsType) {
@@ -38,7 +44,7 @@ export function Todolist(props: PropsType) {
 
     const onClickHandler = () => {
         if (newTask.trim() !== '') {
-            props.addTask(newTask.trim())
+            props.addTask(props.todolistID,newTask.trim())
             setNewTask('')
         } else setError('Error. You got wrong')
 
@@ -58,21 +64,29 @@ export function Todolist(props: PropsType) {
     }
 
     const removeTaskHandler = (elid: string) => {
-        props.removeTasks(elid)
+        props.removeTasks(props.todolistID,elid)
     }
 
     const filterHandler = (filterValue: FilterValuesType) => {
-        props.taskFilter(filterValue)
+        props.taskFilter(props.todolistID, filterValue)
     }
 
     const checkboxHandler = (currentId: string, currentEvent: boolean) => {
-        props.changeCheckboxStatus(currentId, currentEvent)
+        props.changeCheckboxStatus(props.todolistID, currentId, currentEvent)
     }
+
+    const removeTodolistHandler = () => {
+        props.removeTodolist(props.todolistID)
+    }
+
 
     return (
         <div className="App">
             <div>
-                <h3>{props.title}</h3>
+                <h3>
+                    {props.title}
+                    <button onClick={removeTodolistHandler}>X</button>
+                </h3>
                 <div>
                     <input className={error ? style.error : ''}
                         value={newTask}
