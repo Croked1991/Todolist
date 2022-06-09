@@ -2,12 +2,13 @@ import { type } from 'os';
 import React from 'react';
 import { useState, KeyboardEvent, ChangeEvent } from 'react';
 import { FilterValuesType } from './App';
+import { AddItemForm } from './components/AddItemForm';
 import { UniButton } from './components/Button';
 import { Checkbox } from './components/Checkbox';
 import style from './Todolist.module.css'
 
 export type TodolistIDType = {
-    [key:string]:TaskType[]
+    [todolistID:string]:TaskType[]
 }
 
 export type TaskType = {
@@ -37,32 +38,6 @@ type PropsType = {
 
 export function Todolist(props: PropsType) {
 
-    const [newTask, setNewTask] = useState('')
-
-    const [error, setError] = useState <string | null> (null)
-
-
-    const onClickHandler = () => {
-        if (newTask.trim() !== '') {
-            props.addTask(props.todolistID,newTask.trim())
-            setNewTask('')
-        } else setError('Error. You got wrong')
-
-
-    }
-
-    const onKeyPressHadler = (event: KeyboardEvent<HTMLInputElement>) => {
-        if (event.key === 'Enter') {
-            onClickHandler()
-        }
-
-    }
-
-    const setNewTaskHandler = (event: ChangeEvent<HTMLInputElement>) => {
-        setError(null)
-        setNewTask(event.currentTarget.value)
-    }
-
     const removeTaskHandler = (elid: string) => {
         props.removeTasks(props.todolistID,elid)
     }
@@ -87,15 +62,9 @@ export function Todolist(props: PropsType) {
                     {props.title}
                     <button onClick={removeTodolistHandler}>X</button>
                 </h3>
-                <div>
-                    <input className={error ? style.error : ''}
-                        value={newTask}
-                        onKeyPress={onKeyPressHadler}
-                        onChange={setNewTaskHandler}
-                    />
-                    <button onClick={onClickHandler}>+</button>
-                    {error && <p className={style.errorMessage}>{error}</p> }
-                </div>
+               
+            <AddItemForm addTask={props.addTask} todolistID={props.todolistID}/>
+            {/* место для инпута*/}
                 <ul >
                     {props.prokladka.map((el: TaskType) => {
                         return (

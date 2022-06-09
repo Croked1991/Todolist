@@ -41,27 +41,7 @@ function App() {
             ],
     })
 
-
-    // const [todolists, setTodolists] = useState<Array<TodolistType>>([
-    //     { id: v1(), title: 'What to learn', filter: 'All' },
-    //     { id: v1(), title: 'What to buy', filter: 'All' },
-    // ])
-
-
-
-
-    // const [tasks, setTasks] = useState([
-    //     { id: v1(), title: "CSS", isDone: true },
-    //     { id: v1(), title: "JS", isDone: true },
-    //     { id: v1(), title: "React", isDone: false },
-    //     { id: v1(), title: "Rest Api", isDone: false },
-    //     { id: v1(), title: "GraphQL", isDone: false },
-    // ])
-
-    // // const [filterButton, setFilterButton] = useState<FilterValuesType>('All')
-
-
-    
+   
     const buttons = [
         { id: v1(), title: 'All' },
         { id: v1(), title: 'Completed' },

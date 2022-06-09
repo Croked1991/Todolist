@@ -2,6 +2,7 @@ import React from "react";
 import style from '../Todolist.module.css'
 import { FilterValuesType } from '../App';
 import {ButtonType} from '../Todolist'
+import Button from '@mui/material/Button'
 
 type UniButtonType = {
     filterButton: FilterValuesType
@@ -21,7 +22,9 @@ export const UniButton = (props: UniButtonType) => {
         return(<button 
             className={props.filterButton === button.title ? style.activeFilter : ''} 
             onClick={() => filterHandlerButton(button.title)}>{button.title}
-            </button>)}
+            </button>
+            )
+            }
         )
     
     return (
