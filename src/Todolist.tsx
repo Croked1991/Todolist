@@ -28,7 +28,7 @@ type PropsType = {
     removeTasks: (todolistID:string, id: string) => void;
     taskFilter: (todolistID:string,filterValue: FilterValuesType) => void;
     prokladka: Array<TaskType>;
-    addTask: (todolistID:string, newTask: string) => void;
+    addTask: (newTask: string, todolistID: string) => void;
     changeCheckboxStatus: (todolistID:string, currentId: string, eventStatus: boolean) => void
     filterButton: FilterValuesType 
     buttons: ButtonType[]
@@ -54,6 +54,9 @@ export function Todolist(props: PropsType) {
         props.removeTodolist(props.todolistID)
     }
 
+    const addTaskHandler = (newTask:string) => {
+        props.addTask(newTask, props.todolistID)
+    }
 
     return (
         <div className="App">
@@ -62,8 +65,7 @@ export function Todolist(props: PropsType) {
                     {props.title}
                     <button onClick={removeTodolistHandler}>X</button>
                 </h3>
-               
-            <AddItemForm addTask={props.addTask} todolistID={props.todolistID}/>
+                <AddItemForm callback={addTaskHandler}/>
             {/* место для инпута*/}
                 <ul >
                     {props.prokladka.map((el: TaskType) => {

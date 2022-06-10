@@ -3,8 +3,7 @@ import style from "../Todolist.module.css"
 import { useState, KeyboardEvent, ChangeEvent } from 'react';
 
 type AddItemFormType = {
-    addTask: (id:string, newTask:string)=>void
-    todolistID: string
+    callback: (newTask:string)=>void
 }
 
 
@@ -16,7 +15,7 @@ export const AddItemForm = (props: AddItemFormType) => {
 
     const onClickHandler = () => {
         if (newTask.trim() !== '') {
-            props.addTask(props.todolistID,newTask.trim())
+            props.callback(newTask.trim())
             setNewTask('')
         } else setError('Error. You got wrong')
     }

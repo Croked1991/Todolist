@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { v1 } from 'uuid';
 import './App.css';
 import { Todolist, TodolistIDType } from './Todolist';
+import { AddItemForm } from './components/AddItemForm';
 
 export type FilterValuesType = string
 type TodolistType = {
@@ -41,7 +42,7 @@ function App() {
             ],
     })
 
-   
+
     const buttons = [
         { id: v1(), title: 'All' },
         { id: v1(), title: 'Completed' },
@@ -67,6 +68,11 @@ function App() {
         setTasks({...tasks, [todolistID]: tasks[todolistID].map(el => el.id === currentId ? { ...el, isDone: currentEvent } : el)})
     }
 
+    const addTodolist = () => {
+        let newID = v1()
+        let newTodolist =  { id: newID, title: 'What to buy', filter: 'All' }
+        setTodolists([newTodolist, ...todolists])
+    }
 
     const removeTodolist = (todolistID:string) => {
         setTodolists(todolists.filter(el=>el.id !== todolistID))
@@ -75,6 +81,7 @@ function App() {
 
     return (
         <div className="App">
+            <AddItemForm callback={addTodolist} />
             {todolists.map((el) => {
                     let prokladka = tasks[el.id]
                     if (el.filter === 'Active') {
