@@ -28,7 +28,7 @@ export const AddItemForm = (props: AddItemFormType) => {
 
     const setNewTaskHandler = (event: ChangeEvent<HTMLInputElement>) => {
         setError(null)
-        setNewTask(event.currentTarget.value)
+        setNewTask(event.currentTarget.value)     
     }
 
     return (

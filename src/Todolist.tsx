@@ -5,7 +5,9 @@ import { FilterValuesType } from './App';
 import { AddItemForm } from './components/AddItemForm';
 import { UniButton } from './components/Button';
 import { Checkbox } from './components/Checkbox';
+import { EditableSpan } from './components/EditableSpan';
 import style from './Todolist.module.css'
+import { title } from 'process';
 
 export type TodolistIDType = {
     [todolistID:string]:TaskType[]
@@ -34,6 +36,8 @@ type PropsType = {
     buttons: ButtonType[]
     todolistID : string
     removeTodolist: (todolistID:string)=>void
+    updateTask: (todolistID: string, taskID: string, newTitle: string)=>void
+    updateH3: (todolistID: string, newTitle: string)=>void
 }
 
 export function Todolist(props: PropsType) {
@@ -55,24 +59,31 @@ export function Todolist(props: PropsType) {
     }
 
     const addTaskHandler = (newTask:string) => {
-        props.addTask(newTask, props.todolistID)
+        props.addTask(props.todolistID, newTask)
+    }
+
+    const updateTaskHandler = (taskId: string, newTitle:string) => {
+        props.updateTask(props.todolistID, taskId, newTitle)
+    }
+
+    const updateH3Handler = (newTitle: string) => {
+        props.updateH3(props.todolistID, newTitle)
     }
 
     return (
         <div className="App">
             <div>
                 <h3>
-                    {props.title}
+                   <EditableSpan title={props.title} callback={(newTitle: string) => updateH3Handler(newTitle)}/>
                     <button onClick={removeTodolistHandler}>X</button>
                 </h3>
                 <AddItemForm callback={addTaskHandler}/>
-            {/* место для инпута*/}
                 <ul >
                     {props.prokladka.map((el: TaskType) => {
                         return (
                             <li key={el.id} className={el.isDone === true ? style.isDone: ""}>
                                 <Checkbox check={el.isDone} callBack={(currentEvent)=>checkboxHandler(el.id, currentEvent)}/>
-                                <span>{el.title}</span>
+                                <EditableSpan title={el.title} callback={(newTitle:string)=>updateTaskHandler(el.id, newTitle)} /> 
                                 <button onClick={() => removeTaskHandler(el.id)}>X</button>
                             </li>
                         )

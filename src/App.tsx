@@ -3,6 +3,7 @@ import { v1 } from 'uuid';
 import './App.css';
 import { Todolist, TodolistIDType } from './Todolist';
 import { AddItemForm } from './components/AddItemForm';
+import { title } from 'process';
 
 export type FilterValuesType = string
 type TodolistType = {
@@ -68,15 +69,25 @@ function App() {
         setTasks({...tasks, [todolistID]: tasks[todolistID].map(el => el.id === currentId ? { ...el, isDone: currentEvent } : el)})
     }
 
-    const addTodolist = () => {
+    const addTodolist = (newTitle: string) => {
         let newID = v1()
-        let newTodolist =  { id: newID, title: 'What to buy', filter: 'All' }
+        let newTodolist =  { id: newID, title: newTitle, filter: 'All' }
         setTodolists([newTodolist, ...todolists])
+        setTasks({...tasks,  [newID]:[]})
     }
 
     const removeTodolist = (todolistID:string) => {
         setTodolists(todolists.filter(el=>el.id !== todolistID))
         delete tasks[todolistID]
+    }
+
+
+    const updateTask = (todolistID: string, taskID: string, newTitle: string) => {
+        setTasks({...tasks, [todolistID]: tasks[todolistID].map(el=>el.id===taskID ? {...el, title:newTitle} : el)})        
+    }
+
+    const updateH3 = (todolistID: string, newTitle: string) => {
+        setTodolists(todolists.map(el => el.id === todolistID ? {...el, title:newTitle} : el))        
     }
 
     return (
@@ -105,6 +116,8 @@ function App() {
                         filterButton={el.filter}
                         buttons={buttons}
                         removeTodolist={removeTodolist}
+                        updateTask={updateTask}
+                        updateH3={updateH3}
                     />)
             })
             }
