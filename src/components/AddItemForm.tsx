@@ -1,6 +1,7 @@
 import React from "react";
 import style from "../Todolist.module.css"
 import { useState, KeyboardEvent, ChangeEvent } from 'react';
+import { Button } from "@mui/material";
 
 type AddItemFormType = {
     callback: (newTask:string)=>void
@@ -31,6 +32,14 @@ export const AddItemForm = (props: AddItemFormType) => {
         setNewTask(event.currentTarget.value)     
     }
 
+    let quaterButton = {
+        maxWidth: "30px", 
+        maxHeight:"30px", 
+        minWidth:"30px",
+        minHeight:"30px", 
+        "background-color":"black", 
+        color: "white"}
+
     return (
         <div>
             <input className={error ? style.error : ''}
@@ -38,7 +47,8 @@ export const AddItemForm = (props: AddItemFormType) => {
                 onKeyPress={onKeyPressHadler}
                 onChange={setNewTaskHandler}
             />
-            <button onClick={onClickHandler}>+</button>
+            {/* <button onClick={onClickHandler}>+</button> */}
+            <Button onClick={onClickHandler} size="small" variant="contained" style={quaterButton}>+</Button>
             {error && <p className={style.errorMessage}>{error}</p>}
         </div>
     )
