@@ -2,7 +2,8 @@ import React from "react";
 import style from '../Todolist.module.css'
 import { FilterValuesType } from '../App';
 import {ButtonType} from '../Todolist'
-import Button from '@mui/material/Button'
+import { Button } from "@mui/material";
+
 
 type UniButtonType = {
     filterButton: FilterValuesType
@@ -14,20 +15,31 @@ type UniButtonType = {
 
 export const UniButton = (props: UniButtonType) => {
 
+    
+
     const filterHandlerButton = (title: string) => {
         props.filterHandler(title)
     }
 
-    let unicButton = props.buttons.map((button) => {
-        return(<button 
-            className={props.filterButton === button.title ? style.activeFilter : ''} 
-            onClick={() => filterHandlerButton(button.title)}>{button.title}
-            </button>
-            )
-            }
+    let unicButton = props.buttons.map((but) => {
+        return(
+        <Button 
+        color={(but.title === "All") ? "secondary" :
+        (but.title === "Active") ? "error" : 
+        (but.title === "Completed") ? "success" : 
+        undefined}
+        onClick={() => filterHandlerButton(but.title)} 
+        variant={props.filterButton === but.title ? "outlined"  : "contained"}
+         >
+        {but.title}
+        </Button>
         )
-    
+    }
+)
     return (
+        <>
         <div>{unicButton}</div>
+        </>
+
     )
 }

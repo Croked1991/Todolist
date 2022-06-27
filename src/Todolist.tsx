@@ -17,6 +17,7 @@ import { Delete } from '@mui/icons-material';
 
 
 
+
 export type TodolistIDType = {
     [todolistID: string]: TaskType[]
 }
@@ -97,6 +98,7 @@ export function Todolist(props: PropsType) {
                                 <IconButton aria-label="delete">
                                     <Delete onClick={() => removeTaskHandler(el.id)} />
                                 </IconButton>
+
                             </li>
                         )
                     })}
