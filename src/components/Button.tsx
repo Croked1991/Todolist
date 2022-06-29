@@ -30,7 +30,7 @@ export const UniButton = (props: UniButtonType) => {
         undefined}
         onClick={() => filterHandlerButton(but.title)} 
         variant={props.filterButton === but.title ? "outlined"  : "contained"}
-         >
+        >
         {but.title}
         </Button>
         )

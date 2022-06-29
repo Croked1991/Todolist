@@ -2,10 +2,11 @@ import React from "react";
 import style from "../Todolist.module.css"
 import { useState, KeyboardEvent, ChangeEvent } from 'react';
 import Button from "@material-ui/core/Button";
+import { TextField } from "@material-ui/core";
 
 
 type AddItemFormType = {
-    callback: (newTask:string)=>void
+    callback: (newTask: string) => void
 }
 
 
@@ -30,26 +31,36 @@ export const AddItemForm = (props: AddItemFormType) => {
 
     const setNewTaskHandler = (event: ChangeEvent<HTMLInputElement>) => {
         setError(null)
-        setNewTask(event.currentTarget.value)     
+        setNewTask(event.currentTarget.value)
     }
 
     let quaterButton = {
-        maxWidth: "30px", 
-        maxHeight:"30px", 
-        minWidth:"30px",
-        minHeight:"30px", 
-        "background-color":"black", 
-        color: "white"}
+        maxWidth: "30px",
+        maxHeight: "30px",
+        minWidth: "30px",
+        minHeight: "30px",
+        "background-color": "black",
+        color: "white"
+    }
 
     return (
         <div>
-            <input className={error ? style.error : ''}
+            <div className={style.inputButton}>
+            <TextField
+                id="standard-basic"
+                label="Set a task"
+                variant="standard"
                 value={newTask}
                 onKeyPress={onKeyPressHadler}
-                onChange={setNewTaskHandler}
-            />
-            {/* <button onClick={onClickHandler}>+</button> */}
-            <Button onClick={onClickHandler} size="small" variant="contained" style={quaterButton}>+</Button>
+                onChange={setNewTaskHandler} />
+            <Button
+                onClick={onClickHandler}
+                size="small"
+                variant="contained"
+                style={quaterButton}>
+                +
+            </Button>
+            </div>
             {error && <p className={style.errorMessage}>{error}</p>}
         </div>
     )
