@@ -6,10 +6,11 @@ import { useState, KeyboardEvent, ChangeEvent } from 'react';
 import { FilterValuesType } from './App';
 import { AddItemForm } from './components/AddItemForm';
 import { UniButton } from './components/Button';
-import { Checkbox } from './components/Checkbox';
+import { Checkboxes } from './components/Checkbox';
 import { EditableSpan } from './components/EditableSpan';
 import style from './Todolist.module.css'
 import { Delete } from '@mui/icons-material';
+
 
 
 
@@ -93,7 +94,7 @@ export function Todolist(props: PropsType) {
                     {props.prokladka.map((el: TaskType) => {
                         return (
                             <li key={el.id} className={el.isDone === true ? style.isDone : ""}>
-                                <Checkbox check={el.isDone} callBack={(currentEvent) => checkboxHandler(el.id, currentEvent)} />
+                                <Checkboxes check={el.isDone} callBack={(currentEvent) => checkboxHandler(el.id, currentEvent)} />
                                 <EditableSpan title={el.title} callback={(newTitle: string) => updateTaskHandler(el.id, newTitle)} />
                                 <IconButton aria-label="delete">
                                     <Delete onClick={() => removeTaskHandler(el.id)} />

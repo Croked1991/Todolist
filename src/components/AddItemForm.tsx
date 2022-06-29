@@ -14,13 +14,13 @@ type AddItemFormType = {
 export const AddItemForm = (props: AddItemFormType) => {
 
     const [newTask, setNewTask] = useState('')
-    const [error, setError] = useState<string | null>(null)
+    const [error, setError] = useState<boolean>(false)
 
     const onClickHandler = () => {
         if (newTask.trim() !== '') {
             props.callback(newTask.trim())
             setNewTask('')
-        } else setError('Error. You got wrong')
+        } else setError(true)
     }
 
     const onKeyPressHadler = (event: KeyboardEvent<HTMLInputElement>) => {
@@ -30,7 +30,7 @@ export const AddItemForm = (props: AddItemFormType) => {
     }
 
     const setNewTaskHandler = (event: ChangeEvent<HTMLInputElement>) => {
-        setError(null)
+        setError(false)
         setNewTask(event.currentTarget.value)
     }
 
@@ -52,7 +52,8 @@ export const AddItemForm = (props: AddItemFormType) => {
                 variant="standard"
                 value={newTask}
                 onKeyPress={onKeyPressHadler}
-                onChange={setNewTaskHandler} />
+                onChange={setNewTaskHandler}
+                error={error} />
             <Button
                 onClick={onClickHandler}
                 size="small"
@@ -61,7 +62,6 @@ export const AddItemForm = (props: AddItemFormType) => {
                 +
             </Button>
             </div>
-            {error && <p className={style.errorMessage}>{error}</p>}
         </div>
     )
 }
