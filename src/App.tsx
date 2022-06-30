@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useReducer, useState } from 'react';
 import { v1 } from 'uuid';
 import './App.css';
 import { Todolist, TodolistIDType } from './Todolist';
@@ -6,6 +6,7 @@ import { AddItemForm } from './components/AddItemForm';
 import { title } from 'process';
 import {PrimarySearchAppBar } from './components/Header';
 import { Container, Grid, Paper } from '@material-ui/core';
+import { removeTasksAC, TasksReducers } from './reducers/tasksReducers';
 
 export type FilterValuesType = string
 type TodolistType = {
@@ -14,28 +15,32 @@ type TodolistType = {
     filter: FilterValuesType
 }
 
+export type StateType = {
+    [todolistID1:string]:[
+        {id:string, title: string, isDone: boolean}
+    ]
+}
+
 
 
 
 function App() {
 
     let todolistID1 = v1()
-    let todolistID2 = v1()
 
 
     const [todolists, setTodolists] = useState<Array<TodolistType>>([
         { id: todolistID1, title: 'What to learn', filter: 'All' },
     ])
 
-    const [tasks, setTasks] = useState<TodolistIDType>({
+    let state:StateType = {
         [todolistID1]: [
             { id: v1(), title: "CSS", isDone: true },
-            { id: v1(), title: "JS", isDone: true },
-            { id: v1(), title: "React", isDone: false },
-            { id: v1(), title: "Rest Api", isDone: false },
-            { id: v1(), title: "GraphQL", isDone: false },
         ],
-    })
+    } 
+    
+
+    const [tasks, tasksDispatch] = useReducer(TasksReducers, state)
 
 
     const buttons = [
@@ -45,12 +50,12 @@ function App() {
     ]
 
     const removeTasks = (todolistID: string, id: string) => {
-        // let filtered = tasks[todolistID].filter(el => el.id !== id)
-        setTasks({ ...tasks, [todolistID]: tasks[todolistID].filter(el => el.id !== id) })
+        tasksDispatch(removeTasksAC(id))
     }
 
     const addTask = (todolistID: string, newTask: string) => {
         let newTitle = { id: v1(), title: newTask, isDone: false }
+        
         setTasks({ ...tasks, [todolistID]: [newTitle, ...tasks[todolistID]] });
     }
 
