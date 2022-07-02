@@ -5,6 +5,7 @@ const REMOVE_TASK = "REMOVE-TASK"
 const SET_TASK = "SET-TASK"
 const CHANGE_CHECKBOX_STATUS = "CHANGE-CHECKBOX-STATUS"
 const UPDATE_TASK = "UPDATE-TASK"
+const ADD_TODOLIST_TASKS = "ADD-TODOLIST-TASKS"
 
 
 export const TasksReducers = (state: StateType, action: TasksReducerType) => {
@@ -43,6 +44,13 @@ export const TasksReducers = (state: StateType, action: TasksReducerType) => {
             }
             return newState 
         }
+        case ADD_TODOLIST_TASKS: {
+            let newID = v1()
+            let newState = {
+                ...state, [newID]: []
+            }
+            return newState 
+        }
         default: return state
     }
 }
@@ -51,7 +59,8 @@ type RemoveTasksACType = ReturnType<typeof removeTasksAC>
 type SetTaskACType = ReturnType<typeof setTaskAC>
 type ChangeCheckboxStatusACType = ReturnType<typeof changeCheckboxStatusAC>
 type UpdateTaskACType = ReturnType<typeof updateTaskAC>
-type TasksReducerType = RemoveTasksACType | SetTaskACType | ChangeCheckboxStatusACType | UpdateTaskACType
+type AddTodolistTasksAC = ReturnType<typeof addTodolistTasksAC>
+type TasksReducerType = RemoveTasksACType | SetTaskACType | ChangeCheckboxStatusACType | UpdateTaskACType | AddTodolistTasksAC
 
 export const removeTasksAC = (id: string, todolistID: string) => {
     return {
@@ -86,5 +95,11 @@ export const updateTaskAC = (todolistID: string, taskID: string, newTitle: strin
         payload: {
             todolistID, taskID, newTitle
         }
+    } as const
+}
+
+export const addTodolistTasksAC = () => {
+    return {
+        type: ADD_TODOLIST_TASKS,
     } as const
 }

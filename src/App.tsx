@@ -5,8 +5,8 @@ import { Todolist, TodolistIDType } from './Todolist';
 import { AddItemForm } from './components/AddItemForm';
 import {PrimarySearchAppBar } from './components/Header';
 import { Container, Grid, Paper } from '@material-ui/core';
-import { changeCheckboxStatusAC, removeTasksAC, setTaskAC, TasksReducers, updateTaskAC } from './reducers/TasksReducers';
-import { taskFilterAC, TodolistsReducers } from './reducers/TodolistsReducers';
+import { addTodolistTasksAC, changeCheckboxStatusAC, removeTasksAC, setTaskAC, TasksReducers, updateTaskAC } from './reducers/TasksReducers';
+import { addTodolistAC, removeTodolistAC, taskFilterAC, TodolistsReducers, updateH3AC } from './reducers/TodolistsReducers';
 
 
 export type FilterValuesType = string
@@ -71,14 +71,16 @@ function App() {
     }
 
     const addTodolist = (newTitle: string) => {
-        let newID = v1()
-        let newTodolist = { id: newID, title: newTitle, filter: 'All' }
-        setTodolists([newTodolist, ...todolists])
+        
+        todolistsDispatch(addTodolistAC(newTitle))
+        tasksDispatch(addTodolistTasksAC())
+        // setTodolists([newTodolist, ...todolists])
         // setTasks({ ...tasks, [newID]: [] })
     }
 
     const removeTodolist = (todolistID: string) => {
-        setTodolists(todolists.filter(el => el.id !== todolistID))
+        // setTodolists(todolists.filter(el => el.id !== todolistID))
+        todolistsDispatch(removeTodolistAC(todolistID))
         delete tasks[todolistID]
     }
 
@@ -89,7 +91,7 @@ function App() {
     }
 
     const updateH3 = (todolistID: string, newTitle: string) => {
-        setTodolists(todolists.map(el => el.id === todolistID ? { ...el, title: newTitle } : el))
+        todolistsDispatch(updateH3AC(todolistID, newTitle))
     }
 
     return (
