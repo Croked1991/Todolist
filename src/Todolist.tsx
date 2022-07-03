@@ -50,7 +50,7 @@ type PropsType = {
     updateH3: (todolistID: string, newTitle: string) => void
 }
 
-export function Todolist(props: PropsType) {
+export const Todolist = React.memo(function Todolist(props: PropsType) {
 
     const removeTaskHandler = (elid: string) => {
         props.removeTasks(props.todolistID, elid)
@@ -111,4 +111,4 @@ export function Todolist(props: PropsType) {
         </div>
     );
 }
-
+)

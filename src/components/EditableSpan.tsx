@@ -6,7 +6,7 @@ type EditableSpanType = {
     callback: (newTitle: string)=>void
 }
 
-export const EditableSpan = (props: EditableSpanType) => {
+export const EditableSpan = React.memo(function EditableSpan(props: EditableSpanType){
 
 
     
@@ -52,3 +52,4 @@ export const EditableSpan = (props: EditableSpanType) => {
          : <span onDoubleClick={onDoubleClickHandler} >{props.title}</span>
     )
 }
+)

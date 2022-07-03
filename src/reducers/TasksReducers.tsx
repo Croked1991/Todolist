@@ -16,6 +16,7 @@ export const TasksReducers = (state: StateType, action: TasksReducerType) => {
                     [...state[action.payload.todolistID].filter(el =>
                         el.id !== action.payload.id)]
             }
+            console.log(newState)
             return newState
         };
         case SET_TASK: {
@@ -24,6 +25,7 @@ export const TasksReducers = (state: StateType, action: TasksReducerType) => {
                 ...state, [action.payload.todolistID]:
                     [newTitle, ...state[action.payload.todolistID]]
             }
+            console.log(newState)
             return newState
         }
         case CHANGE_CHECKBOX_STATUS: {
@@ -45,10 +47,11 @@ export const TasksReducers = (state: StateType, action: TasksReducerType) => {
             return newState 
         }
         case ADD_TODOLIST_TASKS: {
-            let newID = v1()
             let newState = {
-                ...state, [newID]: []
-            }
+                ...state, [ action.payload.newID]: []
+            }            
+            console.log(newState);
+            
             return newState 
         }
         default: return state
@@ -98,8 +101,11 @@ export const updateTaskAC = (todolistID: string, taskID: string, newTitle: strin
     } as const
 }
 
-export const addTodolistTasksAC = () => {
+export const addTodolistTasksAC = (newID: string) => {
     return {
         type: ADD_TODOLIST_TASKS,
+        payload: {
+            newID
+        }
     } as const
 }

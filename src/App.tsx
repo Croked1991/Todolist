@@ -24,7 +24,7 @@ export type StateType = {
 
 
 
-function App() {
+const App = React.memo(function App() {
 
     let todolistID1 = v1()
 
@@ -56,7 +56,7 @@ function App() {
     const addTask = (todolistID: string, newTask: string) => {
         // let newTitle = { id: v1(), title: newTask, isDone: false }
         // setTasks({ ...tasks, [todolistID]: [newTitle, ...tasks[todolistID]] });
-        tasksDispatch(setTaskAC(todolistID, newTask))
+        tasksDispatch(setTaskAC(todolistID, newTask))      
     }
 
 
@@ -71,9 +71,9 @@ function App() {
     }
 
     const addTodolist = (newTitle: string) => {
-        
-        todolistsDispatch(addTodolistAC(newTitle))
-        tasksDispatch(addTodolistTasksAC())
+        let newID = v1()
+        todolistsDispatch(addTodolistAC(newID, newTitle))
+        tasksDispatch(addTodolistTasksAC(newID))
         // setTodolists([newTodolist, ...todolists])
         // setTasks({ ...tasks, [newID]: [] })
     }
@@ -140,7 +140,7 @@ function App() {
         </>
     )
 }
-
+)
 
 
 export default App;
