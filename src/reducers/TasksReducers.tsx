@@ -11,48 +11,39 @@ const ADD_TODOLIST_TASKS = "ADD-TODOLIST-TASKS"
 export const TasksReducers = (state: StateType, action: TasksReducerType) => {
     switch (action.type) {
         case REMOVE_TASK: {
-            let newState = {
+            return {
                 ...state, [action.payload.todolistID]:
                     [...state[action.payload.todolistID].filter(el =>
                         el.id !== action.payload.id)]
             }
-            console.log(newState)
-            return newState
         };
         case SET_TASK: {
             let newTitle = { id: v1(), title: action.payload.newTask, isDone: false }
-            let newState = {
+            return {
                 ...state, [action.payload.todolistID]:
                     [newTitle, ...state[action.payload.todolistID]]
             }
-            console.log(newState)
-            return newState
         }
         case CHANGE_CHECKBOX_STATUS: {
-            let newState = {
+            return {
                 ...state, [action.payload.todolistID]:
                     [...state[action.payload.todolistID].map(el => 
                         el.id === action.payload.currentId ? 
                         { ...el, isDone: action.payload.currentEvent } : el)]
             }
-            return newState
         }
         case UPDATE_TASK: {
-            let newState = {
+            return {
                 ...state, [action.payload.todolistID]:
                     [...state[action.payload.todolistID].map(el => 
                         el.id === action.payload.taskID ? 
                         { ...el, title: action.payload.newTitle } : el)]
-            }
-            return newState 
+            } 
         }
         case ADD_TODOLIST_TASKS: {
-            let newState = {
+            return {
                 ...state, [ action.payload.newID]: []
-            }            
-            console.log(newState);
-            
-            return newState 
+            }             
         }
         default: return state
     }

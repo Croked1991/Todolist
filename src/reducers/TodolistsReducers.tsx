@@ -25,9 +25,7 @@ export const TodolistsReducers = (state: TodolistType, action: TodolistsReducerT
         case ADD_TODOLIST: {
             // let newID = v1()
             let newTodolist = { id: action.payload.newID, title: action.payload.newTitle, filter: 'All' }
-            let newState = [newTodolist, ...state]
-            console.log(newState);
-            return newState
+            return [newTodolist, ...state]
         }
         case REMOVE_TODOLIST: {
             return state.filter(el => el.id !== action.payload.todolistID)
