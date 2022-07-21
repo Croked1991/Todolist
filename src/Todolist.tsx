@@ -34,7 +34,7 @@ export type ButtonType = {
     title: string
 }
 
-type PropsType = {
+export type TodoType = {
     title: string;
     tasks: TodolistIDType;
     removeTasks: (todolistID: string, id: string) => void;
@@ -50,7 +50,7 @@ type PropsType = {
     updateH3: (todolistID: string, newTitle: string) => void
 }
 
-export const Todolist = React.memo(function Todolist(props: PropsType) {
+export const Todolist = React.memo(function Todolist(props: TodoType) {
 
     const removeTaskHandler = (elid: string) => {
         props.removeTasks(props.todolistID, elid)
@@ -94,7 +94,9 @@ export const Todolist = React.memo(function Todolist(props: PropsType) {
                     {props.prokladka.map((el: TaskType) => {
                         return (
                             <li key={el.id} className={el.isDone === true ? style.isDone : ""}>
-                                <Checkboxes check={el.isDone} callBack={(currentEvent) => checkboxHandler(el.id, currentEvent)} />
+                                <Checkboxes 
+                                    check={el.isDone} 
+                                    callBack={(currentEvent) => checkboxHandler(el.id, currentEvent)} />
                                 <EditableSpan title={el.title} callback={(newTitle: string) => updateTaskHandler(el.id, newTitle)} />
                                 <IconButton aria-label="delete">
                                     <Delete onClick={() => removeTaskHandler(el.id)} />
